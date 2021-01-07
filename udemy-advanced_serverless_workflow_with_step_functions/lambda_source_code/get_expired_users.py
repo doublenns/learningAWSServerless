@@ -22,7 +22,7 @@ def get_iam_accounts():
     return iam_accounts
 
 
-def get_expired_keys():
+def get_expired_keys(event, context):
     result = {}
     expired_keys = []
 
@@ -49,7 +49,7 @@ def get_expired_keys():
         return result
 
 def main():
-    print(get_expired_keys())
+    print(get_expired_keys("event", "context"))
 
 
 if __name__ == "__main__":

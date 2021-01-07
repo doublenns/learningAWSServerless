@@ -45,8 +45,8 @@ def get_expired_keys(event, context):
                                 "UserPath": path
                             }
                         )
-        result["Users"] = expired_keys
-        return result
+    result["Users"] = expired_keys
+    return result
 
 def main():
     print(get_expired_keys("event", "context"))

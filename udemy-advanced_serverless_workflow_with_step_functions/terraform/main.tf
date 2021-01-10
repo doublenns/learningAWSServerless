@@ -60,7 +60,7 @@ resource "aws_iam_policy" "get_expired_users_lambda_policy" {
             "Action": [
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
-                "logs:CreateLogsEvent"
+                "logs:PutLogEvents"
             ],
             "Resource": "*",
             "Effect": "Allow"
@@ -120,7 +120,7 @@ resource "aws_iam_policy" "get_expired_users_sfn_policy" {
             "Action": [
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
-                "logs:CreateLogsEvent"
+                "logs:PutLogEvents"
             ],
             "Resource": "*",
             "Effect": "Allow"

@@ -5,6 +5,10 @@ provider "aws" {
 
 
 ## Lambda deployment
+variable "get_expired_users_lambda_name" {
+  default = "GetExpiredKeys"
+}
+
 data "archive_file" "get_expired_keys_archive" {
     type = "zip"
     source_file = "../lambda_source_code/get_expired_users.py"
@@ -13,7 +17,7 @@ data "archive_file" "get_expired_keys_archive" {
 
 resource "aws_lambda_function" "get_expired_users_lambda"{
     filename = "../lambda_source_code/get_expired_users.zip"
-    function_name = "GetExpiredKeys"
+    function_name = var.get_expired_users_lambda_name
     role = aws_iam_role.get_expired_users_lambda_exec_role.arn
     handler = "get_expired_users.get_expired_keys"
     timeout = 120
@@ -22,12 +26,12 @@ resource "aws_lambda_function" "get_expired_users_lambda"{
 }
 
 resource "aws_cloudwatch_log_group" "get_expired_users_lambda-log_group" {
-    name = "/aws/lambda/GetExpiredKeys"
+    name = "/aws/lambda/${var.get_expired_users_lambda_name}"
     retention_in_days = 1
 }
 
 resource "aws_iam_role" "get_expired_users_lambda_exec_role" {
-    name = "Lambda-GetExpiredKeys"
+    name = "Lambda-${var.get_expired_users_lambda_name}"
 
     assume_role_policy = <<EOF
 {
@@ -48,9 +52,9 @@ resource "aws_iam_role" "get_expired_users_lambda_exec_role" {
 }
 
 resource "aws_iam_policy" "get_expired_users_lambda_policy" {
-    name = "Lambda-GetExpiredKeys"
+    name = "Lambda-${var.get_expired_users_lambda_name}"
     path = "/"
-    description = "IAM policy for lambda GetExpiredKeys"
+    description = "IAM policy for lambda ${var.get_expired_users_lambda_name}"
 
     policy = <<EOF
 {
@@ -87,7 +91,7 @@ resource "aws_iam_role_policy_attachment" "get_expired_users_lambda_exec_role_at
 
 ## Step Function deployment
 resource "aws_iam_role" "get_expired_users_sfn_exec_role" {
-    name = "SFN-GetExpiredKeys"
+    name = "SFN-${var.get_expired_users_lambda_name}"
 
     assume_role_policy = <<EOF
 {
@@ -108,9 +112,9 @@ resource "aws_iam_role" "get_expired_users_sfn_exec_role" {
 }
 
 resource "aws_iam_policy" "get_expired_users_sfn_policy" {
-    name = "SFN-GetExpiredKeys"
+    name = "SFN-${var.get_expired_users_lambda_name}"
     path = "/"
-    description = "IAM policy for step function GetExpiredKeys"
+    description = "IAM policy for step function ${var.get_expired_users_lambda_name}"
 
     policy = <<EOF
 {

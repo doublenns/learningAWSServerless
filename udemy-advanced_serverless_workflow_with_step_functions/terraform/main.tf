@@ -22,7 +22,7 @@ resource "aws_lambda_function" "get_expired_users_lambda"{
 }
 
 resource "aws_cloudwatch_log_group" "get_expired_users_lambda-log_group" {
-    name = "/aws/lambda/GetExpiredKeysLambda"
+    name = "/aws/lambda/GetExpiredKeys"
     retention_in_days = 1
 }
 

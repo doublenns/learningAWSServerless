@@ -25,17 +25,26 @@ jobs:
         #     python-version: "3.x"
         #     architecture:   "x64"
 
-      - name: Install Flake8
+      - name: Install flake8 - Python Linter
         run: |
           python -m pip install --upgrade pip
           pip install flake8
 
-      - name: Run Flake8 Linter
+      - name: flake8 - Lint Lambda Code
         run: |
           flake8 get_expired_users.py
         working-directory: ${{ env.lambda_source_code_dir }}
 
-      - name: Terraform Security Scan
+      - name: tflint/reviewdog - Lint Terraform Code
+        uses: reviewdog/action-tflint@master
+        with:
+          github_token: ${{ secrets.github_token }}
+          # reporter: github-pr-review # Optional. Change reporter
+          # fail_on_error: "true" # Optional. Fail action if errors are found
+          # filter_mode: "nofilter" # Optional. Check all files, not just the diff
+          # flags: "--module" # Optional. Add custom tflint flags
+
+      - name: tfsec - Terraform Security Scan
         uses: triat/terraform-security-scan@v2.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

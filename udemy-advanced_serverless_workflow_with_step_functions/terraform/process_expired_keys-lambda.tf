@@ -66,7 +66,6 @@ resource "aws_iam_policy" "process_expired_keys_lambda_policy" {
         {
             "Action": [
                 "iam:ListUserTags",
-                # "iam:ListAccessKeys"
                 "iam:UpdateAccessKey"
             ],
             "Resource": "*",

@@ -19,6 +19,20 @@
                             "End": true
                         }
                     }
+                },
+                {
+                    "StartAt": "GetServiceAccountsKeys",
+                    "States": {
+                        "GetServiceAccountsKeys": {
+                            "Type": "Task",
+                            "Resource": "${get_expired_keys}",
+                            "Parameters": {
+                                "UserPath": "/service_accounts/",
+                                "MaxKeyAge": 1
+                            },
+                            "End": true
+                        }
+                    }
                 }
             ]
         }

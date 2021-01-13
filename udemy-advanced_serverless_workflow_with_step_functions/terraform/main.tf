@@ -1,9 +1,3 @@
-provider "aws" {
-    region = "us-west-2"
-    profile = "default"
-}
-
-
 ## Lambda deployment
 variable "get_expired_users_lambda_name" {
   default = "GetExpiredKeys"

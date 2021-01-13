@@ -80,10 +80,12 @@ jobs:
       - name: Terraform validate
         id: validate
         run: terraform validate -no-color
+        continue-on-error: true
 
       - name: Terraform plan
         id: plan
         run: terraform plan -input=false -no-color
+        continue-on-error: true
 
       - name: Post Terraform PR Comment
         uses: actions/github-script@0.9.0

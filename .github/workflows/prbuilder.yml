@@ -47,18 +47,24 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 0.12.26
-      - name: Terraform init
+
+      # Note: Color is disabled in the following TF commands to keep
+      # messy characters out of the pull request comment
+
+          - name: Terraform init
         id: init
         run: |
           terraform init \
             -backend-config="bucket=${{ secrets.TFSTATE_BUCKET }}" \
             -backend-config="key=${{ secrets.TFSTATE_OBJECT_KEY }}"
+
       - name: Terraform validate
         id: validate
-        run: terraform validate
-      - name: Terraform plan
+        run: terraform validate -no-color
+
+        - name: Terraform plan
         id: plan
-        run: terraform plan
+        run: terraform plan -input=false -no-color
 
       - name: Post PR Comment
         uses: actions/github-script@0.9.0

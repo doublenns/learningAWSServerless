@@ -75,7 +75,7 @@ jobs:
             -backend-config="key=${{ secrets.TFSTATE_OBJECT_KEY }}"
 
       # Note: Color is disabled in the following TF commands to keep
-      # messy characters out of the pull request comment
+      # messy characters out of the GitHub Actions output
 
       - name: Terraform Validate
         id: validate

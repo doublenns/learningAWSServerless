@@ -48,8 +48,7 @@ jobs:
         run: |
           terraform init \
             -backend-config="bucket=${{ secrets.TFSTATE_BUCKET }}" \
-            -backend-config="key=${{ secrets.TFSTATE_OBJECT_KEY }}" \
-            -backend-config="region=us-west-2"
+            -backend-config="key=${{ secrets.TFSTATE_OBJECT_KEY }}"
       - name: Terraform validate
         id: validate
         run: terraform validate

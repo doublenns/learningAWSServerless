@@ -1,6 +1,6 @@
 ## Step Function deployment
-resource "aws_iam_role" "get_expired_users_sfn_exec_role" {
-  name = "SFN-${var.get_expired_users_lambda_name}"
+resource "aws_iam_role" "get_expired_keys_sfn_exec_role" {
+  name = "SFN-${var.get_expired_keys_lambda_name}"
 
   assume_role_policy = <<EOF
 {
@@ -20,10 +20,10 @@ resource "aws_iam_role" "get_expired_users_sfn_exec_role" {
     EOF
 }
 
-resource "aws_iam_policy" "get_expired_users_sfn_policy" {
-  name        = "SFN-${var.get_expired_users_lambda_name}"
+resource "aws_iam_policy" "get_expired_keys_sfn_policy" {
+  name        = "SFN-${var.get_expired_keys_lambda_name}"
   path        = "/"
-  description = "IAM policy for step function ${var.get_expired_users_lambda_name}"
+  description = "IAM policy for step function ${var.get_expired_keys_lambda_name}"
 
   policy = <<EOF
 {
@@ -42,7 +42,7 @@ resource "aws_iam_policy" "get_expired_users_sfn_policy" {
             "Action": [
                 "lambda:InvokeFunction"
             ],
-            "Resource": "${aws_lambda_function.get_expired_users_lambda.arn}",
+            "Resource": "${aws_lambda_function.get_expired_keys_lambda.arn}",
             "Effect": "Allow"
         }
     ]
@@ -50,16 +50,16 @@ resource "aws_iam_policy" "get_expired_users_sfn_policy" {
     EOF
 }
 
-resource "aws_iam_role_policy_attachment" "get_expired_users_sfn_exec_role_attachment" {
-  role       = aws_iam_role.get_expired_users_sfn_exec_role.name
-  policy_arn = aws_iam_policy.get_expired_users_sfn_policy.arn
+resource "aws_iam_role_policy_attachment" "get_expired_keys_sfn_exec_role_attachment" {
+  role       = aws_iam_role.get_expired_keys_sfn_exec_role.name
+  policy_arn = aws_iam_policy.get_expired_keys_sfn_policy.arn
 }
 
 resource "aws_sfn_state_machine" "expired_users_state_machine" {
   name     = "ExpiredUsersKeyRotation"
-  role_arn = aws_iam_role.get_expired_users_sfn_exec_role.arn
+  role_arn = aws_iam_role.get_expired_keys_sfn_exec_role.arn
 
   definition = templatefile("./expired_users_sfn_defininition.tmpl", {
-    get_expired_keys = aws_lambda_function.get_expired_users_lambda.arn
+    get_expired_keys = aws_lambda_function.get_expired_keys_lambda.arn
   })
 }

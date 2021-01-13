@@ -28,7 +28,7 @@ def get_expired_keys(event, context):
 
     for username, path in get_iam_accounts().items():
         if path == event["UserPath"]:
-        #if path == "/test_users/":
+        # if path == "/test_users/":
             metadata = iam_client.list_access_keys(UserName=username)
             if metadata["AccessKeyMetadata"]:
                 for key in metadata["AccessKeyMetadata"]:
@@ -47,6 +47,7 @@ def get_expired_keys(event, context):
                         )
     result["Users"] = expired_keys
     return result
+
 
 def main():
     print(get_expired_keys("event", "context"))

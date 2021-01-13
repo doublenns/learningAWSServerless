@@ -62,12 +62,12 @@ jobs:
         with:
           terraform_version: 0.12.26
 
-      - name: Terraform fmt
+      - name: Terraform FMT
         id: fmt
         run: terraform fmt -check
         continue-on-error: true
 
-      - name: Terraform init
+      - name: Terraform Init
         id: init
         run: |
           terraform init \
@@ -77,12 +77,12 @@ jobs:
       # Note: Color is disabled in the following TF commands to keep
       # messy characters out of the pull request comment
 
-      - name: Terraform validate
+      - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
         continue-on-error: true
 
-      - name: Terraform plan
+      - name: Terraform Plan
         id: plan
         run: terraform plan -input=false -no-color
         continue-on-error: true

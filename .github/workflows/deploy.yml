@@ -32,9 +32,7 @@ jobs:
 
       - name: flake8 - Lint Lambda Code
         run: |
-          pwd
-          ls
-          flake8 get_expired_users.py
+          flake8 get_expired_keys.py
         working-directory: ${{ env.lambda_source_code_dir }}
 
       - name: tflint/reviewdog - Lint Terraform Code

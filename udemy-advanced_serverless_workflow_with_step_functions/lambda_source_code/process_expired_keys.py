@@ -1,8 +1,6 @@
 import boto3
 
 
-# boto3.setup_default_session(profile_name="default")
-
 iam_resource = boto3.resource("iam")
 iam_client = boto3.client("iam")
 

@@ -87,4 +87,7 @@ jobs:
 
       - name: Terraform Apply
         id: apply
-        run: terraform apply -input=false -no-color -auto-approve
+        run: |
+          pwd
+          ls
+          terraform apply -input=false -no-color -auto-approve

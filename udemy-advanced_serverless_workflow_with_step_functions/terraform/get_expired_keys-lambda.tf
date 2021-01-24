@@ -21,7 +21,7 @@ resource "aws_lambda_function" "get_expired_keys_lambda" {
 
 resource "aws_cloudwatch_log_group" "get_expired_keys_lambda-log_group" {
   name              = "/aws/lambda/${var.get_expired_keys_lambda_name}"
-  retention_in_days = 1
+  retention_in_days = 30
 }
 
 resource "aws_iam_role" "get_expired_keys_lambda_exec_role" {

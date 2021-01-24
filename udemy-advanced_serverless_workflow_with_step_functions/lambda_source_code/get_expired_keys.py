@@ -2,8 +2,6 @@ import boto3
 from datetime import datetime, timezone
 
 
-# boto3.setup_default_session(profile_name="default")
-
 iam_resource = boto3.resource("iam")
 iam_client = boto3.client("iam")
 
@@ -22,7 +20,7 @@ def get_iam_accounts():
     return iam_accounts
 
 
-def get_expired_keys(event, context):
+def lambda_handler(event, context):
     result = {}
     expired_keys = []
 
@@ -47,11 +45,3 @@ def get_expired_keys(event, context):
                         )
     result["Users"] = expired_keys
     return result
-
-
-def main():
-    print(get_expired_keys("event", "context"))
-
-
-if __name__ == "__main__":
-    main()

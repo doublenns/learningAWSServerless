@@ -13,7 +13,7 @@ resource "aws_lambda_function" "process_expired_keys_lambda" {
   filename         = "../lambda_source_code/process_expired_keys.zip"
   function_name    = var.process_expired_keys_lambda_name
   role             = aws_iam_role.process_expired_keys_lambda_exec_role.arn
-  handler          = "process_expired_keys.process_expired_keys"
+  handler          = "process_expired_keys.lambda_handler"
   timeout          = 120
   source_code_hash = data.archive_file.process_expired_keys_archive.output_base64sha256
   runtime          = "python3.8"
@@ -21,7 +21,7 @@ resource "aws_lambda_function" "process_expired_keys_lambda" {
 
 resource "aws_cloudwatch_log_group" "process_expired_keys_lambda-log_group" {
   name              = "/aws/lambda/${var.process_expired_keys_lambda_name}"
-  retention_in_days = 1
+  retention_in_days = 30
 }
 
 resource "aws_iam_role" "process_expired_keys_lambda_exec_role" {

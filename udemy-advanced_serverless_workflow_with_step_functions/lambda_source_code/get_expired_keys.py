@@ -22,7 +22,7 @@ def get_iam_accounts():
     return iam_accounts
 
 
-def get_expired_keys(event, context):
+def lambda_handler(event, context):
     result = {}
     expired_keys = []
 
@@ -49,8 +49,9 @@ def get_expired_keys(event, context):
     return result
 
 
+# If this was ran locally, what event/context would I pass in? ::thinking::
 def main():
-    print(get_expired_keys("event", "context"))
+    print(lambda_handler("event", "context"))
 
 
 if __name__ == "__main__":

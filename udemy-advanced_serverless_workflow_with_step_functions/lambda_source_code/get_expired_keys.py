@@ -2,8 +2,6 @@ import boto3
 from datetime import datetime, timezone
 
 
-# boto3.setup_default_session(profile_name="default")
-
 iam_resource = boto3.resource("iam")
 iam_client = boto3.client("iam")
 
@@ -47,12 +45,3 @@ def lambda_handler(event, context):
                         )
     result["Users"] = expired_keys
     return result
-
-
-# If this was ran locally, what event/context would I pass in? ::thinking::
-def main():
-    print(lambda_handler("event", "context"))
-
-
-if __name__ == "__main__":
-    main()

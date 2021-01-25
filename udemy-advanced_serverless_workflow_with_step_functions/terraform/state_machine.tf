@@ -42,7 +42,10 @@ resource "aws_iam_policy" "get_expired_keys_sfn_policy" {
             "Action": [
                 "lambda:InvokeFunction"
             ],
-            "Resource": "${aws_lambda_function.get_expired_keys_lambda.arn}",
+            "Resource": [
+                "${aws_lambda_function.get_expired_keys_lambda.arn}",
+                "${aws_lambda_function.process_expired_keys_lambda.arn}"
+            ],
             "Effect": "Allow"
         }
     ]

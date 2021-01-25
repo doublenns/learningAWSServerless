@@ -17,9 +17,7 @@
                                 "MaxKeyAge": 1
                             },
                             "Next": "ProcessExpiredUserKeys"
-                        }
-                    },
-                    {
+                        },
                         "ProcessExpiredUserKeys": {
                             "Type": "Map",
                             "ItemPath": "$.Users",
@@ -47,8 +45,6 @@
                         }
                     }
                 },
-            ],
-            [
                 {
                     "StartAt": "GetServiceAccountsKeys",
                     "States": {

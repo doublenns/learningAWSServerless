@@ -22,7 +22,6 @@
                             "Type": "Map",
                             "ItemsPath": "$.Users",
                             "MaxConcurrency": 0,
-                            "End": true
                             "Iterator": {
                                 "StartAt": "DisableUserKeys",
                                 "States": {
@@ -33,6 +32,7 @@
                                     }
                                 }
                             }
+                            "End": true
                         }
                     }
                 },

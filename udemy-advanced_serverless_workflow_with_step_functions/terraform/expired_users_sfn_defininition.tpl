@@ -29,17 +29,7 @@
                                     "DisableUserKeys": {
                                         "Type": "Task",
                                         "End": true
-                                        "Resource": "${process_expired_keys_lambda}",
-                                        "Retry": [
-                                            {
-                                                "ErrorEquals": [
-                                                    "TimeOut"
-                                                ],
-                                                "InternalSecond": 1,
-                                                "BackoffRate": 2,
-                                                "MaxAttempts": 3
-                                            }
-                                        ],
+                                        "Resource": "${process_expired_keys_lambda}"
                                     }
                                 }
                             }

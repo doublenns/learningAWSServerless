@@ -22,11 +22,13 @@
                             "Type": "Map",
                             "ItemsPath": "$.Users",
                             "MaxConcurrency": 0,
+                            "End": true
                             "Iterator": {
                                 "StartAt": "DisableUserKeys",
                                 "States": {
                                     "DisableUserKeys": {
                                         "Type": "Task",
+                                        "End": true
                                         "Resource": "${process_expired_keys_lambda}",
                                         "Retry": [
                                             {
@@ -38,7 +40,6 @@
                                                 "MaxAttempts": 3
                                             }
                                         ],
-                                        "End": true
                                     }
                                 }
                             }

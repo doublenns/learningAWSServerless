@@ -59,7 +59,10 @@ resource "aws_sfn_state_machine" "expired_users_state_machine" {
   name     = "ExpiredUsersKeyRotation"
   role_arn = aws_iam_role.get_expired_keys_sfn_exec_role.arn
 
-  definition = templatefile("./expired_users_sfn_defininition.tmpl", {
-    get_expired_keys = aws_lambda_function.get_expired_keys_lambda.arn
-  })
+  definition = templatefile("./expired_users_sfn_defininition.tmpl",
+    {
+        get_expired_keys_lambda = aws_lambda_function.get_expired_keys_lambda.arn
+        process_expired_keys_lambda = aws_lambda_function.process_expired_keys_lambda.arn
+    }
+  )
 }

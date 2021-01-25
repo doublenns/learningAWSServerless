@@ -11,12 +11,39 @@
                     "States": {
                         "GetUserKeys": {
                             "Type": "Task",
-                            "Resource": "${get_expired_keys}",
+                            "Resource": "${get_expired_keys_lambda}",
                             "Parameters": {
                                 "UserPath": "/test_users/",
                                 "MaxKeyAge": 1
                             },
-                            "End": true
+                            "Next": "ProcessExpiredUserKeys"
+                        }
+                    },
+                    {
+                        "ProcessExpiredUserKeys": {
+                            "Type": "Map",
+                            "ItemPath": "$.Users",
+                            "MaxConcurrency": 0,
+                            "Iterator": {
+                                "StartAt": "DisableUserKeys",
+                                "States": {
+                                    "DisableUserKeys": {
+                                        "Type": "Task",
+                                        "Resource": "${process_expired_keys_lambda}",
+                                        "Retry": [
+                                            {
+                                                "ErrorEquals": [
+                                                    "TimeOut"
+                                                ],
+                                                "InternalSecond": 1,
+                                                "BackoffRate": 2,
+                                                "MaxAttempts": 3
+                                            }
+                                        ],
+                                        "End": true
+                                    }
+                                }
+                            }
                         }
                     }
                 },
@@ -25,7 +52,7 @@
                     "States": {
                         "GetServiceAccountsKeys": {
                             "Type": "Task",
-                            "Resource": "${get_expired_keys}",
+                            "Resource": "${get_expired_keys_lambda}",
                             "Parameters": {
                                 "UserPath": "/service_accounts/",
                                 "MaxKeyAge": 1
